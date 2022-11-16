@@ -19,9 +19,9 @@ const Input = ({
         errorMessage && val ? "mb-4" : "mb-0"
       }`}
     >
-      <Text className={"mb-1"}>{title}</Text>
+      <Text className={"mb-1 text-white"}>{title}</Text>
       <TextInput
-        className={`border border-x-gray-400 text-black px-2 py-2 w-full rounded-md h-[40px] ${styles}`}
+        className={`border border-secondary text-white px-2 py-2 w-full rounded-md h-[40px] ${styles}`}
         placeholder={placeholder}
         autoCorrect={false}
         autoCapitalize={false}

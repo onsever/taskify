@@ -7,8 +7,9 @@ import useInput from "../../hooks/useInput";
 import { loginInputs } from "../../data/inputs";
 import { loginSchema } from "../../schemas/inputSchemas";
 import ActionButton from "../../components/ActionButton";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-const Home = ({ navigation }) => {
+const Login = ({ navigation }) => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const { formik, validatedInputs } = useInput(
@@ -39,7 +40,7 @@ const Home = ({ navigation }) => {
       <StatusBar barStyle="auto" />
       <View
         className={
-          "flex items-center justify-center bg-slate-200 w-screen h-screen"
+          "flex items-center justify-center bg-primary w-screen h-screen"
         }
       >
         <Column styles={""}>
@@ -48,7 +49,7 @@ const Home = ({ navigation }) => {
             className={"w-24 h-24 bg-black rounded-full"}
           />
           <Column>
-            <Text className={"font-bold text-2xl tracking-wider mb-4"}>
+            <Text className={"font-bold text-2xl tracking-wider mb-4 text-white"}>
               Login
             </Text>
 
@@ -82,4 +83,4 @@ const Home = ({ navigation }) => {
   );
 };
 
-export default Home;
+export default Login;
