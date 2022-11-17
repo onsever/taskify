@@ -76,7 +76,7 @@ const Login = ({ navigation }) => {
               );
             })}
             <ActionButton
-              styles={"rounded-lg w-full"}
+              styles={"rounded-lg w-full mt-4"}
               onAction={onLogin}
               disabled={isDisabled}
             >
