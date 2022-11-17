@@ -1,25 +1,19 @@
-import { TouchableOpacity } from "react-native";
+import { Pressable } from "react-native";
 
 const ActionButton = ({
   styles,
   children,
   onAction,
   disabled = false,
-  opacity = 0.6,
 }) => {
   const disabledStyles = () => {
     return disabled ? "opacity-50 bg-gray-500" : "";
   };
 
   return (
-    <TouchableOpacity
-      className={`bg-indigo-500 py-2 px-4 ${styles} ${disabledStyles()}`}
-      disabled={disabled}
-      activeOpacity={opacity}
-      onPress={onAction}
-    >
-      {children}
-    </TouchableOpacity>
+      <Pressable disabled={disabled} style={( { pressed } ) => [ { opacity: pressed ? 0.5 : 1.0 } ]} className={`flex items-center p-4 rounded-full w-1/2 mx-auto bg-bittersweet mt-4 ${styles}`} onPress={onAction}>
+        {children}
+      </Pressable>
   );
 };
 
