@@ -8,9 +8,13 @@ import { loginInputs } from "../../data/inputs";
 import { loginSchema } from "../../schemas/inputSchemas";
 import ActionButton from "../../components/ActionButton";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../../redux/features/authSlice";
 
 const Login = ({ navigation }) => {
   const [isDisabled, setIsDisabled] = useState(true);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
 
   const { formik, validatedInputs } = useInput(
     loginInputs,
@@ -24,6 +28,7 @@ const Login = ({ navigation }) => {
 
   const onLogin = () => {
     formik.handleSubmit();
+    dispatch(login("user"));
     navigation.navigate("Home", { values: formik.values });
   };
 
