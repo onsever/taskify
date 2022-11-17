@@ -24,8 +24,12 @@ const Login = ({ navigation }) => {
 
   const onLogin = () => {
     formik.handleSubmit();
-    navigation.navigate("Details", { values: formik.values });
+    navigation.navigate("Home", { values: formik.values });
   };
+
+  const onRegister = () => {
+    navigation.navigate("Register");
+  }
 
   useEffect(() => {
     if (Object.keys(formik.errors).length === 0) {
@@ -36,28 +40,25 @@ const Login = ({ navigation }) => {
   }, [formik.errors]);
 
   return (
-    <SafeAreaView className={"flex items-center justify-center"}>
-      <StatusBar barStyle="auto" />
+    <SafeAreaView className={"flex items-center justify-center w-screen h-screen bg-primary"}>
+        <StatusBar barStyle="light-content" />
       <View
         className={
-          "flex items-center justify-center bg-primary w-screen h-screen"
+          "flex items-center justify-center w-full h-full"
         }
       >
         <Column styles={""}>
           <Image
-            source={"../../assets/favicon.png"}
-            className={"w-24 h-24 bg-black rounded-full"}
+            source={require("../../assets/logo-2.png")}
+            className={"w-full h-32 mb-8"}
           />
           <Column>
-            <Text className={"font-bold text-2xl tracking-wider mb-4 text-white"}>
-              Login
-            </Text>
-
             {validatedInputs.map((input, index) => {
               return (
                 <Input
                   key={index}
-                  styles={input.styles}
+                  inputStyles={"h-12"}
+                  viewStyles={"h-[90px]"}
                   placeholder={input.placeholder}
                   errorMessage={formik.errors[input.name]}
                   onAction={formik.handleChange(input.name)}
@@ -70,12 +71,15 @@ const Login = ({ navigation }) => {
               );
             })}
             <ActionButton
-              styles={"rounded-lg w-1/3"}
+              styles={"rounded-lg w-full"}
               onAction={onLogin}
               disabled={isDisabled}
             >
-              <Text className={"text-white font-bold text-center"}>Login</Text>
+                <Text className={"text-white font-bold text-xl tracking-wide"}>Login</Text>
             </ActionButton>
+             <View className={"mt-4 w-screen flex items-center"}>
+                 <Text className={"text-white p-2"}>Don't you have an account? { <Text className={"text-bittersweet underline"} onPress={onRegister}>Register</Text> }</Text>
+             </View>
           </Column>
         </Column>
       </View>
