@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CalendarStackNavigator from "./CalendarStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import AdminStackNavigator from "./AdminStackNavigator";
+import Colors from "../utils/Colors";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,8 +28,12 @@ const TabNavigator = () => {
 
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
-                tabBarActiveTintColor: "#000",
-                tabBarInactiveTintColor: "gray",
+                tabBarActiveTintColor: "#fff",
+                tabBarInactiveTintColor: Colors.frenchGray,
+                headerShown: false,
+                tabBarStyle: {
+                    backgroundColor: Colors.secondary,
+                }
             })}
         >
             <Tab.Screen name="Home" component={HomeStackNavigator} />
