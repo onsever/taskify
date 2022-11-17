@@ -1,31 +1,18 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Login from "./screens/login/Login";
-import Home from "./screens/home/Home";
-import OnBoarding from "./screens/onboarding/OnBoarding";
-import Register from "./screens/register/Register";
-
-const Stack = createNativeStackNavigator();
+import AuthStackNavigator from "./navigators/AuthStackNavigator";
+import TabNavigator from "./navigators/TabNavigator";
+import { useState, useEffect } from "react";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Group>
-          <Stack.Screen name="OnBoarding" component={OnBoarding} options={{
-              headerShown: false,
-          }} />
-          <Stack.Screen name="Login" component={Login} options={{
-              headerShown: false,
-          }} />
-          <Stack.Screen name="Register" component={Register} options={{
-              headerShown: false,
-          }} />
-          <Stack.Screen name={"Home"} component={Home} options={{
-              headerShown: false,
-          }} />
-        </Stack.Group>
-      </Stack.Navigator>
-    </NavigationContainer>
+    const [user, setUser] = useState("null");
+
+    return (
+        <Provider store={store}>
+            <NavigationContainer>
+                {user ? <TabNavigator /> : <AuthStackNavigator />}
+            </NavigationContainer>
+        </Provider>
   );
 }
