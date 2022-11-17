@@ -11,7 +11,7 @@ const ActionButton = ({
   };
 
   return (
-      <Pressable disabled={disabled} style={( { pressed } ) => [ { opacity: pressed ? 0.5 : 1.0 } ]} className={`flex items-center p-4 rounded-full w-1/2 mx-auto bg-bittersweet mt-4 ${styles}`} onPress={onAction}>
+      <Pressable disabled={disabled} style={( { pressed } ) => [ { opacity: pressed ? 0.5 : 1.0 } ]} className={`flex items-center p-4 rounded-full w-1/2 mx-auto bg-bittersweet ${styles}`} onPress={onAction}>
         {children}
       </Pressable>
   );
