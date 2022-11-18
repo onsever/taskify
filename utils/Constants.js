@@ -18,9 +18,9 @@ class Task {
 export default class Constants {
     constructor() {}
     static dummyData = [
-        new Task("Task 1", "Description 1", 1, "2021-01-01", "2021-01-02", false),
-        new Task("Task 2", "Description 2", 2, "2021-01-01", "2021-01-03", false),
-        new Task("Task 3", "Description 3", 3, "2021-01-01", "2021-01-04", false),
-        new Task("Task 4", "Description 4", 4, "2021-01-01", "2021-01-05", false),
+        new Task("Task 1", "Description 1", "2022-10-18", "2021-10-02", false),
+        new Task("Task 2", "Description 2", "2022-10-18", "2021-10-02", false),
+        new Task("Task 3", "Description 3", "2022-10-18", "2021-10-02", false),
+        new Task("Task 4", "Description 4", "2022-10-19", "2021-10-02", false),
     ];
 }
