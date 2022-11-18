@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../utils/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import ActionButton from "../../components/ActionButton";
 
 const CreateTask = () => {
   const [date, setDate] = useState(new Date());
@@ -124,7 +125,17 @@ const CreateTask = () => {
           <Text className={"text-white mb-5 text-bold text-xl"}>
             Descriptions
           </Text>
-          <Text className={"text-white"}>This is a description.</Text>
+          <TextInput className={"text-white"}>This is a description.</TextInput>
+        </View>
+
+        <View className={"mt-[30%]"}>
+          <Pressable
+            className={
+              "flex items-center p-4 rounded-full w-full mx-auto bg-bittersweet"
+            }
+          >
+            <Text className={"text-white font-bold text-xl"}>Create Task</Text>
+          </Pressable>
         </View>
       </View>
     </SafeAreaView>
