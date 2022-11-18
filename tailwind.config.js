@@ -14,7 +14,8 @@ module.exports = {
         bittersweet: "#FF7361",
         anakiwa: "#AFD5FF",
         frenchGray: "#C2C3C9",
-      }
+        grayishBlue: "#3F4553",
+      },
     },
   },
   plugins: [],
