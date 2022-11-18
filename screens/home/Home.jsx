@@ -20,6 +20,7 @@ const Home = ({ navigation }) => {
           inputContainerStyle={{
             backgroundColor: Colors.secondary,
             borderRadius: "50%",
+            paddingLeft: 10,
           }}
           containerStyle={{
             borderWidth: 0,
@@ -73,7 +74,7 @@ const Home = ({ navigation }) => {
           </View>
         </ScrollView>
         <View className={"mb-40"}>
-          <View className={"flex flex-row items-center justify-between mt-10"}>
+          <View className={"flex flex-row items-center justify-between mt-5"}>
             <Text className={"fw-bold text-white text-2xl"}>Ongoing Tasks</Text>
             <Pressable>
               <Text className={"text-bittersweet "}>See All</Text>
