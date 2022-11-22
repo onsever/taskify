@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AdminScreen from "../screens/admin/AdminScreen";
-import CreateTask from "../screens/createTask/createTask";
+import CreateTask from "../screens/createTask/CreateTask";
 
 const Stack = createNativeStackNavigator();
 
@@ -11,7 +11,9 @@ const AdminStackNavigator = () => {
                 <Stack.Screen name="AdminScreen" component={AdminScreen} options={{
                     headerShown: false,
                 }} />
-                <Stack.Screen name="CreateTask" component={CreateTask} />
+                <Stack.Screen name="CreateTask" component={CreateTask} options={{
+                    headerShown: false,
+                }} />
             </Stack.Group>
         </Stack.Navigator>
     );

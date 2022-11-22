@@ -41,27 +41,33 @@ const CreateTask = () => {
   return (
     <SafeAreaView className={"bg-primary flex-1"}>
       <View className={"p-8"}>
-        <View className={"mb-5"}>
-          <Text className={"text-bold text-white text-3xl"}>Create</Text>
-          <Text className={"text-bold text-white text-3xl"}>New Task</Text>
+        <View className={"mb-2 flex-row items-center justify-between"}>
+          <View>
+            <Text className={"text-bold text-white text-3xl"}>Create</Text>
+            <Text className={"text-bold text-white text-3xl"}>New Task</Text>
+          </View>
+          <View>
+            <Text className={"text-white text-l"}>Assign Members</Text>
+
+          </View>
         </View>
-        <View className={"mb-5"}>
-          <Text className={"text-white mb-5 text-xl text-bold"}>
+        <View className={"mb-1"}>
+          <Text className={"text-white mb-1 text-xl text-bold"}>
             Task Title
           </Text>
-          <TextInput className={"h-10 border-b border-secondary mb-5"} />
+          <TextInput className={"h-10 border-b border-secondary mb-5 text-white"} />
         </View>
-        <View className={"flex flex-row justify-between mb-5"}>
+        <View className={"flex flex-row justify-between mb-1"}>
           <View
             className={
-              "mb-5 flex flex-row bg-secondary p-5 rounded-lg items-center mr-3"
+              "mb-5 flex flex-col bg-secondary p-5 rounded-lg items-center mr-3 w-1/2"
             }
           >
-            <View className={"mr-5 "}>
+            <View className={"w-full items-center"}>
               <Ionicons name="calendar" size={24} color={Colors.bittersweet} />
             </View>
-            <View>
-              <Text className={"text-white mb-2"}>Start Date</Text>
+            <View className={"w-full"}>
+              <Text className={"text-white w-full text-center my-2"}>Start Date</Text>
               <View
                 className={
                   "bg-bittersweet mt-2 text-white p-3 flex items-center justify-center mb-5"
@@ -88,14 +94,14 @@ const CreateTask = () => {
 
           <View
             className={
-              "mb-5 flex flex-row bg-secondary p-5 rounded-lg items-center"
+              "mb-5 flex flex-col bg-secondary p-5 rounded-lg items-center w-1/2"
             }
           >
-            <View className={"mr-5 "}>
+            <View className={"w-full items-center"}>
               <Ionicons name="calendar" size={24} color={Colors.bittersweet} />
             </View>
-            <View>
-              <Text className={"text-white mb-2"}>End Date</Text>
+            <View className={"w-full"}>
+              <Text className={"text-white text-center my-2"}>End Date</Text>
               <View
                 className={
                   "bg-bittersweet mt-2 text-white p-3 flex items-center justify-center mb-5"
@@ -123,7 +129,7 @@ const CreateTask = () => {
 
         <View className={"mb-5"}>
           <Text className={"text-white mb-5 text-bold text-xl"}>
-            Descriptions
+            Description
           </Text>
           <TextInput className={"text-white"}>This is a description.</TextInput>
         </View>
