@@ -72,4 +72,14 @@ export const registerInputs = [
     secure: true,
     value: "",
   },
-]
+  {
+    id: 6,
+    name: "confirmPassword",
+    keyboardType: "password",
+    placeholder: "Confirm Password",
+    styles: "",
+    title: "Confirm Password",
+    secure: true,
+    value: "",
+  },
+];
