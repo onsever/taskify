@@ -11,16 +11,19 @@ const usePost = () => {
     setIsLoading(true);
     setIsLoaded(false);
     setResult(null);
+    setError(null)
     try {
       const result = await api.post(path, body, {
         headers: headers
-      });
+      })
       setIsLoading(false);
       setResult(result.data);
       setIsLoaded(true);
+      setError(null)
     } catch (error) {
+      setResult(null);
       setIsLoading(false);
-      setError(error);
+      setError(error.response ? error.response.data : error);
       setIsLoaded(true);
     }
   }

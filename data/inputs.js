@@ -44,7 +44,7 @@ export const registerInputs = [
   },
   {
     id: 3,
-    name: "phoneNumber",
+    name: "phone",
     keyboardType: "number-pad",
     placeholder: "eg: 647-123-4567",
     styles: "",

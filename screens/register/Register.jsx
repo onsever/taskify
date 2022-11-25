@@ -1,4 +1,11 @@
-import { View, Text, StatusBar, Image, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StatusBar,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Column from "../../components/Column";
 import Input from "../../components/Input";
@@ -6,6 +13,11 @@ import ActionButton from "../../components/ActionButton";
 import useInput from "../../hooks/useInput";
 import { registerInputs } from "../../data/inputs";
 import { registerSchema } from "../../schemas/inputSchemas";
+import { usePost } from "../../hooks/usePost";
+import { useEffect } from "react";
+import { Alert } from "react-native";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/features/authSlice";
 
 const Register = ({ navigation }) => {
   const { formik, validatedInputs } = useInput(
@@ -18,11 +30,27 @@ const Register = ({ navigation }) => {
     }
   );
 
-  const onRegister = () => {};
+  const { post, result, loading, error, loaded } = usePost();
+  const dispatch = useDispatch();
+
+  const onRegister = () => {
+    post("auth/register", formik.values);
+  };
 
   const onLogin = () => {
     navigation.goBack();
   };
+
+  useEffect(() => {
+    if (loaded) {
+      if (error) {
+        Alert.alert("Error", error.data);
+      }
+      if (result) {
+        dispatch(login(result.data));
+      }
+    }
+  }, [loaded]);
 
   return (
     <SafeAreaView
@@ -56,8 +84,14 @@ const Register = ({ navigation }) => {
                 />
               );
             })}
-            <ActionButton styles={"rounded-lg w-full"} onAction={onRegister}>
-              <Text className={"text-white font-bold text-xl tracking-wide"}>
+            <ActionButton
+              styles={"rounded-lg w-full flex-row justify-center"}
+              onAction={loading ? null : onRegister}
+            >
+              {loading && <ActivityIndicator color={"white"} />}
+              <Text
+                className={"text-white font-bold text-xl tracking-wide pl-2"}
+              >
                 Register
               </Text>
             </ActionButton>

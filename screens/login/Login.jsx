@@ -101,7 +101,7 @@ const Login = ({ navigation }) => {
               <Text className={"text-white p-2"}>
                 Don't you have an account?
               </Text>
-              <TouchableOpacity className={"p-5"} onPress={onRegister}>
+              <TouchableOpacity className={"p-1"} onPress={onRegister}>
                 <Text className={"text-bittersweet underline"}>Register</Text>
               </TouchableOpacity>
             </View>
