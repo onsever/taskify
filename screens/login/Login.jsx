@@ -7,34 +7,43 @@ import useInput from "../../hooks/useInput";
 import { loginInputs } from "../../data/inputs";
 import { loginSchema } from "../../schemas/inputSchemas";
 import ActionButton from "../../components/ActionButton";
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../redux/features/authSlice";
+import { usePost } from "../../hooks/usePost";
 
 const Login = ({ navigation }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+  const { post, result, loaded } = usePost();
 
   const { formik, validatedInputs } = useInput(
     loginInputs,
     loginSchema,
     async (values, actions) => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(values);
-      actions.resetForm();
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
+      // console.log(values);
+      // post("/auth/login", values);
+      // actions.resetForm();
     }
   );
 
+  useEffect(() => {
+    if (loaded && result) {
+      dispatch(login(result.data));
+      // navigation.navigate("Home", { values: formik.values });
+    }
+  }, [result, loaded]);
+
   const onLogin = () => {
     formik.handleSubmit();
-    dispatch(login("user"));
-    navigation.navigate("Home", { values: formik.values });
+    post("auth/login", formik.values);
   };
 
   const onRegister = () => {
     navigation.navigate("Register");
-  }
+  };
 
   useEffect(() => {
     if (Object.keys(formik.errors).length === 0) {
@@ -45,13 +54,13 @@ const Login = ({ navigation }) => {
   }, [formik.errors]);
 
   return (
-    <SafeAreaView className={"flex items-center justify-center w-screen h-screen bg-primary"}>
-        <StatusBar barStyle="light-content" />
-      <View
-        className={
-          "flex items-center justify-center w-full h-full"
-        }
-      >
+    <SafeAreaView
+      className={
+        "flex items-center justify-center w-screen h-screen bg-primary"
+      }
+    >
+      <StatusBar barStyle="light-content" />
+      <View className={"flex items-center justify-center w-full h-full"}>
         <Column styles={""}>
           <Image
             source={require("../../assets/logo-2.png")}
@@ -80,11 +89,23 @@ const Login = ({ navigation }) => {
               onAction={onLogin}
               disabled={isDisabled}
             >
-                <Text className={"text-white font-bold text-xl tracking-wide"}>Login</Text>
+              <Text className={"text-white font-bold text-xl tracking-wide"}>
+                Login
+              </Text>
             </ActionButton>
-             <View className={"mt-4 w-screen flex items-center"}>
-                 <Text className={"text-white p-2"}>Don't you have an account? { <Text className={"text-bittersweet underline"} onPress={onRegister}>Register</Text> }</Text>
-             </View>
+            <View className={"mt-4 w-screen flex items-center"}>
+              <Text className={"text-white p-2"}>
+                Don't you have an account?{" "}
+                {
+                  <Text
+                    className={"text-bittersweet underline"}
+                    onPress={onRegister}
+                  >
+                    Register
+                  </Text>
+                }
+              </Text>
+            </View>
           </Column>
         </Column>
       </View>
