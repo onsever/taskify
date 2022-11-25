@@ -1,14 +1,37 @@
-import { View, Text, StatusBar, Image } from "react-native";
+import { View, Text, StatusBar, Image, ActivityIndicator } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../utils/Colors";
 import TaskItem from "../../components/TaskItem";
 import ActionButton from "../../components/ActionButton";
-import { useDispatch } from "react-redux";
-import { logout } from "../../redux/features/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "../../redux/features/authSlice";
+import { useFetch } from "../../hooks/useFetch";
+import { useEffect, useState } from "react";
 
 const ProfileScreen = ({ navigation }) => {
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const { fetch, result, loaded, loading, error } = useFetch();
+  const [completedTask, setCompletedTask] = useState([]);
+  const [outgoingTask, setOutgoingTask] = useState([]);
+
+  useEffect(() => {
+    fetch("task");
+  }, []);
+
+  useEffect(() => {
+    if (loaded) {
+      if (result) {
+        setCompletedTask(result.filter((x) => x.isComplete));
+        setOutgoingTask(result.filter((x) => !x.isComplete));
+      }
+
+      if (error) {
+        console.log("error ===========>", error);
+      }
+    }
+  }, [loaded, result]);
 
   return (
     <SafeAreaView className={"w-screen h-screen bg-primary"}>
@@ -23,8 +46,10 @@ const ProfileScreen = ({ navigation }) => {
             uri: "https://www.nicepng.com/png/detail/388-3889577_girl-vector-3-an-images-hub-girl-vector.png",
           }}
         />
-        <Text className={"text-white font-bold mb-3"}>Nisha Bhattarai</Text>
-        <Text className={"text-white mb-5"}>nb@gmail.com</Text>
+        <Text className={"text-white font-bold mb-3"}>
+          {user.firstName} {user.lastName}
+        </Text>
+        <Text className={"text-white mb-5"}>{user.email}</Text>
         <View className={"flex flex-row justify-between"}>
           <View
             className={
@@ -40,7 +65,14 @@ const ProfileScreen = ({ navigation }) => {
             </View>
             <View>
               <Text className={"text-white "}>Completed Task</Text>
-              <Text className={"text-white font-bold text-lg"}> 20</Text>
+              {loading ? (
+                <ActivityIndicator className={"py-2"} />
+              ) : (
+                <Text className={"text-white font-bold text-lg"}>
+                  {" "}
+                  {completedTask.length}
+                </Text>
+              )}
             </View>
           </View>
           <View
@@ -53,15 +85,22 @@ const ProfileScreen = ({ navigation }) => {
             </View>
             <View>
               <Text className={"text-white "}>Ongoing Task</Text>
-              <Text className={"text-white font-bold text-lg"}> 20</Text>
+              {loading ? (
+                <ActivityIndicator className={"py-2"} />
+              ) : (
+                <Text className={"text-white font-bold text-lg"}>
+                  {" "}
+                  {outgoingTask.length}
+                </Text>
+              )}
             </View>
           </View>
         </View>
       </View>
-      <View className={"items-center"}>
+      {/* <View className={"items-center"}>
         <TaskItem styles={"w-[90%]"}></TaskItem>
         <TaskItem styles={"w-[90%]"}></TaskItem>
-      </View>
+      </View> */}
       <ActionButton onAction={() => dispatch(logout())}>
         <Text>Logout</Text>
       </ActionButton>

@@ -11,17 +11,19 @@ const useFetch = () => {
     setIsLoading(true);
     setIsLoaded(false);
     setResult(null);
+    setError(null);
     try {
       const result = await api.get(path, {
         headers: headers
       });
-      setResult(result);
+      setResult(result.data.data);
       setIsLoading(false);
       setIsLoaded(true);
     } catch (error) {
       setIsLoading(false);
-      setError(error);
+      setError(error.response ? error.response.data : error);
       setIsLoaded(true);
+      setResult(null)
     }
   }
 
