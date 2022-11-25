@@ -5,10 +5,14 @@ import CalendarStackNavigator from "./CalendarStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import AdminStackNavigator from "./AdminStackNavigator";
 import Colors from "../utils/Colors";
+import { useSelector } from "react-redux";
+import { selectUser } from "../redux/features/authSlice";
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => {
+    const user = useSelector(selectUser);
+
     return (
         <Tab.Navigator
             initialRouteName="Home"
@@ -39,7 +43,7 @@ const TabNavigator = () => {
             <Tab.Screen name="Home" component={HomeStackNavigator} />
             <Tab.Screen name="Calendar" component={CalendarStackNavigator} />
             <Tab.Screen name="Profile" component={ProfileStackNavigator} />
-            <Tab.Screen name="Admin" component={AdminStackNavigator} />
+            {user.role === "superAdmin" && <Tab.Screen name="Admin" component={AdminStackNavigator} />}
         </Tab.Navigator>
     );
 }
