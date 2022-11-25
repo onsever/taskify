@@ -3,8 +3,13 @@ import SafeAreaView from "react-native-safe-area-view";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../utils/Colors";
 import TaskItem from "../../components/TaskItem";
+import ActionButton from "../../components/ActionButton";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/features/authSlice";
 
 const ProfileScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   return (
     <SafeAreaView className={"w-screen h-screen bg-primary"}>
       <StatusBar barStyle="light-content" />
@@ -57,6 +62,9 @@ const ProfileScreen = ({ navigation }) => {
         <TaskItem styles={"w-[90%]"}></TaskItem>
         <TaskItem styles={"w-[90%]"}></TaskItem>
       </View>
+      <ActionButton onAction={() => dispatch(logout())}>
+        <Text>Logout</Text>
+      </ActionButton>
     </SafeAreaView>
   );
 };

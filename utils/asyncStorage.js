@@ -22,10 +22,20 @@ const getData = async (key) => {
     console.log("Error on get data", e);
   }
 }
+
+const deleteData = async (key) => {
+  try {
+    await AsyncStorage.removeItem(key);
+  } catch (e) {
+    // error reading value
+    console.log("Error on get data", e);
+  }
+}
 //Private General Functions END
 
 
 export {
   storeData,
   getData,
+  deleteData
 };
