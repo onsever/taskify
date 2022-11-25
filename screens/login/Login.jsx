@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, Pressable, Image } from "react-native";
+import { View, Text, StatusBar, Image, TouchableOpacity } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import { useState, useEffect } from "react";
 import Input from "../../components/Input";
@@ -93,18 +93,17 @@ const Login = ({ navigation }) => {
                 Login
               </Text>
             </ActionButton>
-            <View className={"mt-4 w-screen flex items-center"}>
+            <View
+              className={
+                "mt-4 w-screen flex items-center flex-row justify-center"
+              }
+            >
               <Text className={"text-white p-2"}>
-                Don't you have an account?{" "}
-                {
-                  <Text
-                    className={"text-bittersweet underline"}
-                    onPress={onRegister}
-                  >
-                    Register
-                  </Text>
-                }
+                Don't you have an account?
               </Text>
+              <TouchableOpacity className={"p-5"} onPress={onRegister}>
+                <Text className={"text-bittersweet underline"}>Register</Text>
+              </TouchableOpacity>
             </View>
           </Column>
         </Column>
