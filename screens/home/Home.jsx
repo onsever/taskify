@@ -1,4 +1,4 @@
-import { View, Text, StatusBar, Pressable, Image } from "react-native";
+import { View, Text, StatusBar, Pressable, Image, ActivityIndicator } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import { Agenda } from "react-native-calendars/src/index";
 import { SearchBar } from "react-native-elements";
@@ -6,8 +6,16 @@ import Colors from "../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import ActionButton from "../../components/ActionButton";
 import { ScrollView } from "react-native-gesture-handler";
+import { useFetch } from "../../hooks/useFetch";
+import { useEffect } from "react";
 
 const Home = ({ navigation }) => {
+  const { fetch, result, loaded, loading, error } = useFetch();
+
+  useEffect(() => {
+    fetch('project/user');
+  }, [])
+
   return (
     <SafeAreaView className={"w-screen h-screen bg-primary p-8"}>
       <StatusBar barStyle="light-content" />
@@ -47,30 +55,16 @@ const Home = ({ navigation }) => {
         </View>
         <ScrollView horizontal>
           <View className={"flex flex-row items-center mt-5 mb-5"}>
-            <View className={"p-5 bg-secondary rounded-lg mr-2 ml-2"}>
-              <Text className={"fw-bold text-white text-xl mb-3"}>
-                Project 1
-              </Text>
-              <Text className={"text-white text-l"}>10 Tasks</Text>
-            </View>
-            <View className={"p-5 bg-secondary rounded-lg mr-2 ml-2"}>
-              <Text className={"fw-bold text-white text-xl mb-3"}>
-                Project 2
-              </Text>
-              <Text className={"text-white text-l"}>5 Tasks</Text>
-            </View>
-            <View className={"p-5 bg-secondary rounded-lg mr-2 ml-2"}>
-              <Text className={"fw-bold text-white text-xl mb-3"}>
-                Project 1
-              </Text>
-              <Text className={"text-white text-l"}>10 Tasks</Text>
-            </View>
-            <View className={"p-5 bg-secondary rounded-lg mr-2 ml-2"}>
-              <Text className={"fw-bold text-white text-xl mb-3"}>
-                Project 2
-              </Text>
-              <Text className={"text-white text-l"}>5 Tasks</Text>
-            </View>
+            {loading ? <ActivityIndicator /> : (result?.map(x => {
+              return (
+                <View className={"p-5 bg-secondary rounded-lg mr-2 ml-2"}>
+                  <Text className={"fw-bold text-white text-xl mb-3"}>
+                    {x.title}
+                  </Text>
+                  <Text className={"text-white text-l"}>{x.tasks.length}</Text>
+                </View>
+              )
+            }))}
           </View>
         </ScrollView>
         <View className={"mb-40"}>
