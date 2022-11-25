@@ -1,17 +1,31 @@
-import { View, Text, StatusBar, Pressable, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StatusBar,
+  Pressable,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import SearchBar from "../../components/SearchBar";
 import Row from "../../components/Row";
 import Column from "../../components/Column";
 import { Ionicons } from "@expo/vector-icons";
 import TaskItem from "../../components/TaskItem";
-import Constants from "../../utils/Constants";
+import { useFetch } from "../../hooks/useFetch";
+import { useEffect } from "react";
 
 const AdminScreen = ({ navigation }) => {
+  const { fetch, result, loading } = useFetch();
+
   const onAdd = () => {
     // console.log("Add button pressed");
     navigation.navigate("CreateTask");
   };
+
+  useEffect(() => {
+    fetch("task");
+  }, []);
 
   return (
     <SafeAreaView className={"w-screen h-screen bg-primary"}>
@@ -35,20 +49,24 @@ const AdminScreen = ({ navigation }) => {
             </Text>
           </View>
           <View className={"w-full"}>
-            <FlatList
-              style={{ width: "100%" }}
-              data={Constants.dummyData}
-              keyExtractor={(item) => item.id}
-              renderItem={({ item }) => (
-                <TaskItem
-                  name={item.name}
-                  description={item.description}
-                  startDate={item.startDate}
-                  endDate={item.endDate}
-                  completed={item.completed}
-                />
-              )}
-            />
+            {loading ? (
+              <ActivityIndicator />
+            ) : (
+              <FlatList
+                style={{ width: "100%" }}
+                data={result}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => (
+                  <TaskItem
+                    name={item.name}
+                    description={item.description}
+                    startDate={item.startDate}
+                    endDate={item.endDate}
+                    completed={item.isComplete}
+                  />
+                )}
+              />
+            )}
           </View>
         </Column>
       </View>
