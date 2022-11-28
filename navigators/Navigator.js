@@ -10,10 +10,14 @@ const Navigator = () => {
   const userLoggedIn = useSelector(selectUser);
   const dispatch = useDispatch();
 
-  useEffect(async () => {
-    const user = await getData("user");
-    if (user)
-      dispatch(login(user))
+  useEffect(() => {
+    async function fetchData() {
+      const user = await getData("user");
+      if (user)
+        dispatch(login(user))
+    }
+    fetchData();
+
   }, [])
 
   return (
