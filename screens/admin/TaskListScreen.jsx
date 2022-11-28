@@ -24,7 +24,7 @@ const TaskListScreen = ({ navigation, route }) => {
   const project = route.params.project;
 
   const onAdd = () => {
-    navigation.navigate("CreateTask", { project: project });
+    navigation.navigate("CreateTask", { project: project, onGoBack: refresh() });
   };
 
   useEffect(() => {
@@ -107,9 +107,7 @@ const TaskListScreen = ({ navigation, route }) => {
             </Pressable>
           </Row>
           <View className={"mb-4 w-full"}>
-            <Text
-              className={"ptext-white text-2xl font-bold tracking-wide w-full"}
-            >
+            <Text className={"ptext-white text-2xl font-bold tracking-wide w-full"}>
               Task List
             </Text>
           </View>
@@ -128,7 +126,9 @@ const TaskListScreen = ({ navigation, route }) => {
                     startDate={item.startDate}
                     endDate={item.endDate}
                     completed={item.isComplete}
-                    onPress={() => navigation.navigate("taskList")}
+                    onPress={() => {
+                      navigation.navigate("CreateTask", { project: project, onGoBack: () => refresh(), task: item });
+                    }}
                   />
                 )}
                 refreshControl={
