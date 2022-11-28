@@ -13,10 +13,12 @@ import Column from "../../components/Column";
 import { Ionicons } from "@expo/vector-icons";
 import TaskItem from "../../components/TaskItem";
 import { useFetch } from "../../hooks/useFetch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { RefreshControl } from "react-native-gesture-handler";
 
 const AdminScreen = ({ navigation }) => {
   const { fetch, result, loading } = useFetch();
+  const [refreshing, setRefreshing] = useState(false);
 
   const onAdd = () => {
     navigation.navigate("CreateProject", {
@@ -54,7 +56,7 @@ const AdminScreen = ({ navigation }) => {
             </Text>
           </View>
           <View className={"w-full"}>
-            {loading ? (
+            {loading || refreshing ? (
               <ActivityIndicator />
             ) : (
               <FlatList
@@ -76,6 +78,9 @@ const AdminScreen = ({ navigation }) => {
                     }
                   />
                 )}
+                refreshControl={
+                  <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+                }
               />
             )}
           </View>

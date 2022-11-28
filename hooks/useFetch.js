@@ -16,7 +16,6 @@ const useFetch = () => {
       const result = await api.get(path, {
         headers: headers
       });
-      console.log("result",result.data.data);
       setResult(result.data.data);
       setIsLoading(false);
       setIsLoaded(true);

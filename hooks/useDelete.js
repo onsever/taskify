@@ -7,7 +7,7 @@ const useDelete = () => {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
-  const doDelete = async (path, body, headers) => {
+  const doDelete = async (path, headers) => {
     setIsLoading(true);
     setIsLoaded(false);
     setResult(null);

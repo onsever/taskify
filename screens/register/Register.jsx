@@ -25,7 +25,6 @@ const Register = ({ navigation }) => {
     registerSchema,
     async (values, actions) => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log(values);
       actions.resetForm();
     }
   );
