@@ -16,6 +16,7 @@ import TaskItem from "../../components/TaskItem";
 import { useFetch } from "../../hooks/useFetch";
 import { useDelete } from "../../hooks/useDelete";
 import { useEffect } from "react";
+import { RefreshControl } from "react-native-gesture-handler";
 
 const TaskListScreen = ({ navigation, route }) => {
   const { fetch, result, loading } = useFetch();
@@ -130,6 +131,9 @@ const TaskListScreen = ({ navigation, route }) => {
                     onPress={() => navigation.navigate("taskList")}
                   />
                 )}
+                refreshControl={
+                  <RefreshControl refreshing={loading} onRefresh={refresh} />
+                }
               />
             )}
           </View>

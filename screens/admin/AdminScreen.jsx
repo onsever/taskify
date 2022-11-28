@@ -56,7 +56,7 @@ const AdminScreen = ({ navigation }) => {
             </Text>
           </View>
           <View className={"w-full"}>
-            {loading || refreshing ? (
+            {loading ? (
               <ActivityIndicator />
             ) : (
               <FlatList
@@ -79,7 +79,7 @@ const AdminScreen = ({ navigation }) => {
                   />
                 )}
                 refreshControl={
-                  <RefreshControl refreshing={refreshing} onRefresh={refresh} />
+                  <RefreshControl refreshing={loading} onRefresh={refresh} />
                 }
               />
             )}
