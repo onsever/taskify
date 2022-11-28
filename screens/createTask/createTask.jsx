@@ -50,8 +50,6 @@ const CreateTask = ({ navigation, route }) => {
   const memberFetch = useFetch();
   const taskFetch = useFetch();
 
-  console.log(editTask);
-
   const [task, setTask] = useState({
     title: editTask ? editTask.title : null,
     description: editTask ? editTask.description : null,
@@ -236,7 +234,6 @@ const CreateTask = ({ navigation, route }) => {
               "flex items-center p-4 rounded-full w-full mx-auto bg-bittersweet mb-7"
             }
             onPress={() => {
-              console.log("task", task);
               editTask
                 ? updateTask.update(`task/${editTask._id}`, task)
                 : postTask.post("task", task);
