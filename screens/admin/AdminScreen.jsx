@@ -19,8 +19,13 @@ const AdminScreen = ({ navigation }) => {
   const { fetch, result, loading } = useFetch();
 
   const onAdd = () => {
-    // console.log("Add button pressed");
-    navigation.navigate("CreateTask");
+    navigation.navigate("CreateProject", {
+      onGoBack: () => refresh(),
+    });
+  };
+
+  const refresh = () => {
+    fetch("project");
   };
 
   useEffect(() => {
@@ -63,7 +68,9 @@ const AdminScreen = ({ navigation }) => {
                     startDate={item.startDate}
                     endDate={item.endDate}
                     completed={item.isComplete}
-                    onPress={() => navigation.navigate("taskList")}
+                    onPress={() =>
+                      navigation.navigate("taskList", { project: item })
+                    }
                   />
                 )}
               />

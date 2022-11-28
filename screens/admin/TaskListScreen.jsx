@@ -15,8 +15,9 @@ import TaskItem from "../../components/TaskItem";
 import { useFetch } from "../../hooks/useFetch";
 import { useEffect } from "react";
 
-const TaskListScreen = ({ navigation }) => {
+const TaskListScreen = ({ navigation, route }) => {
   const { fetch, result, loading } = useFetch();
+  const project = route.params.project;
 
   const onAdd = () => {
     // console.log("Add button pressed");
@@ -32,6 +33,12 @@ const TaskListScreen = ({ navigation }) => {
       <StatusBar barStyle="light-content" />
       <View className="flex items-center justify-center">
         <Column>
+          <Row>
+            <Text className="text-2xl">Project: {project.title}</Text>
+          </Row>
+          <Row>
+            <Text className="text-1xl">{project.description}</Text>
+          </Row>
           <Row styles={"my-2"}>
             <SearchBar />
             <Pressable
@@ -43,7 +50,7 @@ const TaskListScreen = ({ navigation }) => {
           </Row>
           <View className={"mb-4 w-full"}>
             <Text
-              className={"ptext-white text-2xl font-bold tracking-wide  w-full"}
+              className={"ptext-white text-2xl font-bold tracking-wide w-full"}
             >
               Task List
             </Text>

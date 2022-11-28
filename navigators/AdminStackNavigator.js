@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AdminScreen from "../screens/admin/AdminScreen";
 import TaskListScreen from "../screens/admin/TaskListScreen";
+import CreateProject from "../screens/createProject/createProject";
 import CreateTask from "../screens/createTask/createTask";
 import Colors from "../utils/Colors";
 
@@ -20,6 +21,21 @@ const AdminStackNavigator = () => {
         <Stack.Screen
           name="CreateTask"
           component={CreateTask}
+          options={{
+            headerStyle: {
+              backgroundColor: Colors.primary,
+            },
+            headerTitleStyle: {
+              color: Colors.primary,
+            },
+            headerBackTitleStyle: {
+              color: Colors.anakiwa,
+            },
+          }}
+        />
+        <Stack.Screen
+          name="CreateProject"
+          component={CreateProject}
           options={{
             headerStyle: {
               backgroundColor: Colors.primary,
