@@ -15,7 +15,7 @@ import TaskItem from "../../components/TaskItem";
 import { useFetch } from "../../hooks/useFetch";
 import { useEffect } from "react";
 
-const AdminScreen = ({ navigation }) => {
+const TaskListScreen = ({ navigation }) => {
   const { fetch, result, loading } = useFetch();
 
   const onAdd = () => {
@@ -24,7 +24,7 @@ const AdminScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    fetch("project");
+    fetch("task");
   }, []);
 
   return (
@@ -45,7 +45,7 @@ const AdminScreen = ({ navigation }) => {
             <Text
               className={"ptext-white text-2xl font-bold tracking-wide  w-full"}
             >
-              Project List
+              Task List
             </Text>
           </View>
           <View className={"w-full"}>
@@ -59,7 +59,7 @@ const AdminScreen = ({ navigation }) => {
                 renderItem={({ item }) => (
                   <TaskItem
                     name={item.title}
-                    description={item.description}
+                    description={item.name}
                     startDate={item.startDate}
                     endDate={item.endDate}
                     completed={item.isComplete}
@@ -75,4 +75,4 @@ const AdminScreen = ({ navigation }) => {
   );
 };
 
-export default AdminScreen;
+export default TaskListScreen;

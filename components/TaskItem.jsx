@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../utils/Colors";
 
@@ -9,9 +9,13 @@ const TaskItem = ({
   endDate,
   completed,
   styles,
+  onPress,
 }) => {
   return (
-    <View className={`bg-secondary w-full rounded-2xl mb-2 p-4 ${styles}`}>
+    <TouchableOpacity
+      onPress={onPress || null}
+      className={`bg-secondary w-full rounded-2xl mb-2 p-4 ${styles}`}
+    >
       <View className={"flex flex-row items-center justify-between mb-2"}>
         <Text className={"text-white font-bold text-xl tracking-wider"}>
           {name}
@@ -45,7 +49,7 @@ const TaskItem = ({
           />
         )}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
