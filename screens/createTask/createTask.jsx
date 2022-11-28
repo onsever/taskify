@@ -6,17 +6,29 @@ import {
   Platform,
   Pressable,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../utils/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import ActionButton from "../../components/ActionButton";
+import { ScrollView } from "react-native-gesture-handler";
+import { Picker } from "@react-native-picker/picker";
+import { useFetch } from "../../hooks/useFetch";
 
-const CreateTask = () => {
+const CreateTask = ({ navigation, route }) => {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
-  const [text, setText] = useState("");
+  const [selectedMember, setSelectedMember] = useState();
+
+  const project = route.params.project;
+
+  const memberFetch = useFetch();
+  const taskFetch = useFetch();
+
+  useEffect(() => {
+    memberFetch.fetch("user");
+    taskFetch.fetch(`project/${project._id}/task`);
+  }, []);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -40,7 +52,7 @@ const CreateTask = () => {
 
   return (
     <SafeAreaView className={"bg-primary flex-1"}>
-      <View className={"p-8"}>
+      <ScrollView className={"p-8"}>
         <View className={"mb-5"}>
           <Text className={"text-bold text-white text-3xl"}>Create</Text>
           <Text className={"text-bold text-white text-3xl"}>New Task</Text>
@@ -128,6 +140,45 @@ const CreateTask = () => {
           <TextInput className={"text-white"}>This is a description.</TextInput>
         </View>
 
+        <View className={"mb-5"}>
+          <Text className={"text-white mb-5 text-bold text-xl"}>
+            Assign Member
+          </Text>
+          <Picker
+            selectedValue={selectedMember}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedMember(itemValue)
+            }
+          >
+            {memberFetch.result &&
+              memberFetch.result.map((x) => {
+                return (
+                  <Picker.Item
+                    label={`${x.firstName} ${x.lastName}`}
+                    value={x._id}
+                  />
+                );
+              })}
+          </Picker>
+        </View>
+
+        <View className={"mb-5"}>
+          <Text className={"text-white mb-5 text-bold text-xl"}>
+            Select Pre Task
+          </Text>
+          <Picker
+            selectedValue={selectedMember}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedMember(itemValue)
+            }
+          >
+            {taskFetch.result &&
+              taskFetch.result.map((x) => {
+                return <Picker.Item label={`${x.title}`} value={x._id} />;
+              })}
+          </Picker>
+        </View>
+
         <View className={"mt-[30%]"}>
           <Pressable
             className={
@@ -137,7 +188,7 @@ const CreateTask = () => {
             <Text className={"text-white font-bold text-xl"}>Create Task</Text>
           </Pressable>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

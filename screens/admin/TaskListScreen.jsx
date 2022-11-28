@@ -21,11 +21,11 @@ const TaskListScreen = ({ navigation, route }) => {
 
   const onAdd = () => {
     // console.log("Add button pressed");
-    navigation.navigate("CreateTask");
+    navigation.navigate("CreateTask", { project: project });
   };
 
   useEffect(() => {
-    fetch("task");
+    fetch(`project/${project._id}/task`);
   }, []);
 
   return (
