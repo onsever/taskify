@@ -94,11 +94,16 @@ const Home = ({ navigation }) => {
             {ongoingTaskFetch.loading ? (
               <ActivityIndicator />
             ) : (
-              ongoingTaskFetch.result.map((task) => {
+              ongoingTaskFetch.result?.map((task) => {
                 return (
                   <TouchableOpacity
                     onPress={() => {
-                      navigation.navigate("");
+                      navigation.navigate("CreateTask", {
+                        onGoBack: () => {
+                          ongoingTaskFetch.fetch("task/ongoing");
+                        },
+                        task: task,
+                      });
                     }}
                     className={"p-5 bg-secondary rounded-lg w-full m-5"}
                   >
