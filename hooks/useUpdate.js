@@ -1,30 +1,34 @@
 import { useState } from 'react';
 import { api } from '../api/api';
 
-const usePut = () => {
-  const [loading, setIsLoading] = useState < boolean > (false);
-  const [loaded, setIsLoaded] = useState < boolean > (false);
-  const [result, setResult] = useState < any > (null);
-  const [error, setError] = useState < any > (null);
+const useUpdate = () => {
+  const [loading, setIsLoading] = useState(false);
+  const [loaded, setIsLoaded] = useState(false);
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
 
-  const put = async (path, body, headers) => {
+  const update = async (path, body, headers) => {
     setIsLoading(true);
     setIsLoaded(false);
     setResult(null);
+    setError(null)
     try {
       const result = await api.put(path, body, {
         headers: headers
-      });
+      })
       setIsLoading(false);
-      setResult(result);
+      setResult(result.data);
       setIsLoaded(true);
+      setError(null)
     } catch (error) {
+      console.log(error);
+      setResult(null);
       setIsLoading(false);
-      setError(error);
+      setError(error.response ? error.response.data : error);
       setIsLoaded(true);
     }
   }
-  return { loading, result, error, loaded, put }
+  return { loading, result, error, loaded, update }
 }
 
-export { usePut };
+export { useUpdate };

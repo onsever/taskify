@@ -12,19 +12,31 @@ import Colors from "../../utils/Colors";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import { usePost } from "../../hooks/usePost";
+import { useUpdate } from "../../hooks/useUpdate";
 
 const CreateProject = ({ navigation, route }) => {
-  const [eDate, setEDate] = useState(new Date());
-  const [sDate, setSDate] = useState(new Date());
+  const editProject = route.params.project;
+
+  const [eDate, setEDate] = useState(
+    editProject
+      ? moment(editProject.endDate, "DD/MM/YYYY").toDate()
+      : new Date()
+  );
+  const [sDate, setSDate] = useState(
+    editProject
+      ? moment(editProject.startDate, "DD/MM/YYYY").toDate()
+      : new Date()
+  );
   const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(editProject ? true : false);
   const [project, setProject] = useState({
-    title: null,
-    description: null,
-    startDate: null,
-    endDate: null,
+    title: editProject ? editProject.title : null,
+    description: editProject ? editProject.description : null,
+    startDate: editProject ? editProject.startDate : null,
+    endDate: editProject ? editProject.endDate : null,
   });
-  const { result, loading, loaded, post, error } = usePost();
+  const postProject = usePost();
+  const updateProject = useUpdate();
 
   const onChangeEDate = (event, selectedDate) => {
     setEDate(selectedDate);
@@ -47,18 +59,30 @@ const CreateProject = ({ navigation, route }) => {
   };
 
   useEffect(() => {
-    if (result && loaded) {
+    if (
+      (postProject.result && postProject.loaded) ||
+      (updateProject.result && updateProject.loaded)
+    ) {
       route.params.onGoBack();
       navigation.goBack();
     }
-  }, [result, loaded]);
+  }, [
+    postProject.result,
+    postProject.loaded,
+    updateProject.result,
+    updateProject.loaded,
+  ]);
 
   return (
     <SafeAreaView className={"bg-primary flex-1"}>
       <View className={"p-8"}>
         <View className={"mb-5"}>
-          <Text className={"text-bold text-white text-3xl"}>Create</Text>
-          <Text className={"text-bold text-white text-3xl"}>New Project</Text>
+          <Text className={"text-bold text-white text-3xl"}>
+            {editProject ? "Edit" : "Create"}
+          </Text>
+          <Text className={"text-bold text-white text-3xl"}>
+            {!editProject && "New "}Project
+          </Text>
         </View>
         <View className={"mb-5"}>
           <Text className={"text-white mb-5 text-xl text-bold"}>
@@ -160,12 +184,17 @@ const CreateProject = ({ navigation, route }) => {
             }
             onPress={() => {
               // console.log("project", project);
-              post("project", project);
+
+              editProject
+                ? updateProject.update(`project/${editProject._id}`, project)
+                : postProject.post("project", project);
             }}
           >
-            {loading && <ActivityIndicator color={"white"} />}
+            {(postProject.loading || updateProject.loading) && (
+              <ActivityIndicator color={"white"} />
+            )}
             <Text className={"text-white font-bold text-xl pl-2"}>
-              Create Project
+              {editProject ? "Update" : "Add"} Project
             </Text>
           </Pressable>
         </View>

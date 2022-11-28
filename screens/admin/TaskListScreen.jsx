@@ -24,6 +24,15 @@ const TaskListScreen = ({ navigation, route }) => {
     navigation.navigate("CreateTask", { project: project });
   };
 
+  const onEdit = () => {
+    navigation.navigate("CreateProject", {
+      project: project,
+      onGoBack: () => refresh(),
+    });
+  };
+
+  const refresh = () => fetch(`project/${project._id}/task`);
+
   useEffect(() => {
     fetch(`project/${project._id}/task`);
   }, []);
@@ -38,6 +47,21 @@ const TaskListScreen = ({ navigation, route }) => {
           </Row>
           <Row>
             <Text className="text-1xl">{project.description}</Text>
+          </Row>
+          <Row>
+            <Pressable
+              className="flex items-center justify-center w-12 h-12 rounded-full bg-bittersweet pl-0.5"
+              onPress={onEdit}
+            >
+              <Ionicons name="ios-pencil" size={24} color="white" />
+            </Pressable>
+
+            <Pressable
+              className="flex items-center justify-center w-12 h-12 rounded-full bg-bittersweet pl-0.5"
+              onPress={onAdd}
+            >
+              <Ionicons name="trash" size={24} color="white" />
+            </Pressable>
           </Row>
           <Row styles={"my-2"}>
             <SearchBar />
