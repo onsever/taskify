@@ -69,7 +69,10 @@ const AdminScreen = ({ navigation }) => {
                     endDate={item.endDate}
                     completed={item.isComplete}
                     onPress={() =>
-                      navigation.navigate("taskList", { project: item })
+                      navigation.navigate("taskList", {
+                        project: item,
+                        onGoBack: () => refresh(),
+                      })
                     }
                   />
                 )}

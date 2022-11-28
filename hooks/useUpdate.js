@@ -7,7 +7,7 @@ const useUpdate = () => {
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
-  const update = async (path, body, headers) => {
+  const update = async (path, headers) => {
     setIsLoading(true);
     setIsLoaded(false);
     setResult(null);
